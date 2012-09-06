@@ -1,0 +1,8 @@
+@mixin webp($property, $value) {
+  html.webp & {
+    #{$property}: webp($value);
+  }
+  html.no-webp & {
+    #{$property}: $value;
+  }
+}
