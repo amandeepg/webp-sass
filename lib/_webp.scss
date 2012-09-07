@@ -1,6 +1,6 @@
-@mixin webp($property, $value) {
+@mixin webp($property, $value, $cmd_line_options: "") {
   html.webp & {
-    #{$property}: webp($value);
+    #{$property}: webp($value, $cmd_line_options);
   }
   html.no-webp & {
     #{$property}: $value;

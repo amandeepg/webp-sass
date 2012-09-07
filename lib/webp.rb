@@ -15,8 +15,9 @@
 require 'sass'
 
 module Sass::Script::Functions
-  def webp(string)
+  def webp(string, cmd_line_options)
     assert_type string, :String
+    assert_type cmd_line_options, :String
 
     #Strip out the 'url' part if it was given in that format
     string = if string.value =~ /^url\(/
@@ -31,16 +32,18 @@ module Sass::Script::Functions
     file_ext = File.extname(orig_file)[1..-1]
     webp_file = File.join(image_dir, File.basename(string, file_ext) + "webp")
 
+    full_cmd_line_options = cmd_line_options.value + ' -quiet ' + orig_file + ' -o ' + webp_file
+
     #Generate .webp images
     if file_ext == 'png'
-      system('cwebp -lossless -m 6 -quiet ' + orig_file + ' -o ' + webp_file)
+      system('cwebp -lossless ' + full_cmd_line_options)
     elsif ['jpg', 'jpeg'].include? file_ext
-      system('cwebp -m 6 -quiet ' + orig_file + ' -o ' + webp_file)
+      system('cwebp ' + full_cmd_line_options)
     end
 
     #Write out url for the .webp image
     Sass::Script::String.new('url(' + File.join(File.dirname(string), File.basename(string, file_ext) + "webp" + ')'))
   end
 
-  declare :webp, :args => [:string]
+  declare :webp, :args => [:string, :cmd_line_options]
 end
