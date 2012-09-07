@@ -19,11 +19,17 @@ Usage
 1. Wherever you use images, replace it with a call to the mixin `webp`, for example replace `background-image: url(../img/my_image.png);` with `@include webp(background-image, url(../img/my_image.png));`
 1. Compile with SASS along with this library, for example: `$ sass --watch --compass scss:css -r ./scss/webp/webp.rb`
 
-How it works
-------------
-When you make a call to the mixin `webp`, it generates a WebP image from the original image, and places it in the same directory as the original image. If the original image was a `.png`, then it generate a lossless WebP image, if it's a `.jpg` or `.jpeg `, then it's a lossly WebP image.
+Mixin Detailed Usage
+--------------------
+```
+@include webp([$property-name], [$image_path], [$cmd-line-params])
+```
 
-The arguments to the mixin are the CSS property name, and the property value. The value must be an image. The image parameter can can be specified as a url (`url(../img/my_image.png)`) or just the path (`'../img/my_image.png'`).
+Generates a WebP image from the `[$image_path]`, and places it in the same directory as `[$image_path]`. If the original image was a `.png`, then it generates a lossless WebP image, if it's a `.jpg` or `.jpeg `, then it's a lossly WebP image. The value must be an image. it can be specified as a url (`url(../img/my_image.png)`) or just the path (`'../img/my_image.png'`).
+
+`[$property-name]` is the CSS property name.
+
+`[$cmd-line-params]` is any command line parameters to pass to `cwebp`. By default it is an empty string. For usage, refer to the the [cwebp documention].
 
 Contributing
 ------------
@@ -66,3 +72,4 @@ limitations under the License.
   [@amandeep]: http://twitter.com/amandeep
   [Modernizr download page]: http://modernizr.com/download/
   [WebP-compatible browsers]: http://en.wikipedia.org/wiki/WebP#Support
+  [cwebp documention]: https://developers.google.com/speed/webp/docs/cwebp
